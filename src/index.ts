@@ -1,13 +1,14 @@
-const { Command } = require('commander')
+import { farm } from './commands/farm'
+import { Command } from 'commander'
+import { spawn } from './commands/spawn'
+
 const program = new Command()
 program.version('0.0.1')
 
 program
-  .command('init')
-  .description('initialize reducers')
-  .action((source, destination) => {
-    console.log('command called')
-  })
+  .command('farm')
+  .description('initialize root reducer')
+  .action(() => farm())
 
 program
   .command('spawn')
