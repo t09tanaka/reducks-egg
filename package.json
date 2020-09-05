@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "ts-sample": "./bin/ts-sample.js"
+    "reducks-egg": "./bin/reducks-egg.js"
   },
   "repository": {
     "type": "git",
