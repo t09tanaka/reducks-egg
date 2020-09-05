@@ -9,6 +9,7 @@
 
 ## Check List
 
-- [ ] Create reducer directory
-- [ ] Create reducer by state
-- [ ] Create component scaffold using redux
+- [ ] Generate combineReducers
+- [ ] Generate reducer module
+- [ ] Generate reducer by state
+- [ ] Generate component scaffold using redux

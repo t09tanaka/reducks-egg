@@ -1,14 +1,46 @@
-const num: number = +process.argv[2]
-console.log(fizzbuzz(num))
+const { Command } = require('commander')
+const program = new Command()
+program.version('0.0.1')
 
-function fizzbuzz(num: number): string {
-  if (num % 15 == 0) {
-    return 'FizzBuzz'
-  } else if (num % 3 == 0) {
-    return 'Fizz'
-  } else if (num % 5 == 0) {
-    return 'Buzz'
-  }
+program
+  .command('init')
+  .description('initialize reducers')
+  .action((source, destination) => {
+    console.log('command called')
+  })
 
-  return num.toString()
-}
+program
+  .command('spawn')
+  .option('-n, --reducer-name', 'reducer name as camel case')
+  .option('-d, --directory', 'output directory')
+  .description('generate reducks style reducer module')
+  .action((source, destination) => {
+    console.log('command called')
+  })
+
+program
+  .command('bake')
+  .option('-d, --directory', 'reducer directory')
+  .description('generate reducers by state user made')
+  .action((source, destination) => {
+    console.log('command called')
+  })
+
+program
+  .command('toast')
+  .option('-c, --component-name', 'component name')
+  .option('-c, --component-name', 'component name')
+  .option('-d, --directory', 'output directory')
+  .description('generate component scaffold using redux')
+  .action((source, destination) => {
+    console.log('command called')
+  })
+
+program.on('--help', () => {
+  console.log()
+  console.log('For more information, see')
+  console.log('https://github.com/t09tanaka/reducks-egg')
+  console.log()
+})
+
+program.parse(process.argv)
