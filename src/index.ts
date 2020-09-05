@@ -1,5 +1,6 @@
-import { farm } from './commands/farm'
 import { Command } from 'commander'
+
+import { farm } from './commands/farm'
 import { spawn } from './commands/spawn'
 
 const program = new Command()
@@ -12,11 +13,14 @@ program
 
 program
   .command('spawn')
-  .option('-n, --reducer-name', 'reducer name as camel case')
-  .option('-d, --directory', 'output directory')
+  .option(
+    '-n, --reducer-name <name>',
+    'reducer name as camel case: e.g., accountDetail'
+  )
+  .option('-c, --category <category>', 'reducer`s category')
   .description('generate reducks style reducer module')
-  .action((source, destination) => {
-    console.log('command called')
+  .action((source) => {
+    spawn(source.reducerName, source.category)
   })
 
 program
