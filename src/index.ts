@@ -1,4 +1,5 @@
 import { Command } from 'commander'
+import readlineSync from 'readline-sync'
 
 import { farm } from './commands/farm'
 import { spawn } from './commands/spawn'
@@ -14,14 +15,15 @@ program
 
 program
   .command('spawn')
-  .option(
-    '-n, --reducer-name <name>',
-    'reducer name as camel case: e.g., accountDetail'
-  )
-  .option('-c, --category <category>', 'reducer`s category')
   .description('generate reducks style reducer module')
-  .action((source) => {
-    spawn(source.reducerName, source.category)
+  .action(() => {
+    const reducerName = readlineSync.question(
+      'Enter your reducer name (e.g., accountDetail) '
+    )
+    const category = readlineSync.question(
+      'Enter reducer category (optional / e.g., domains) '
+    )
+    spawn(reducerName, category)
   })
 
 program
@@ -34,7 +36,17 @@ program
   .option('-p, --path <path>', 'component path from root')
   .description('generate component using redux')
   .action((source) => {
-    bake(source.reducerName, source.componentName, source.path)
+    const reducerName = readlineSync.question(
+      'Enter your reducer name (e.g., accountDetail) '
+    )
+    const componentName = readlineSync.question(
+      'Enter your component name (e.g., AccountNameField) '
+    )
+    const pathName = readlineSync.question(
+      'Enter component directory path (e.g., /src/components/account/detail) '
+    )
+
+    bake(reducerName, componentName, pathName)
   })
 
 program.on('--help', () => {

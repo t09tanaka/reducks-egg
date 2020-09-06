@@ -52,7 +52,5 @@ export const bake = (
   const templates = new ComponentTemplate(reducerName, componentName)
   writeFileSync(componentPath, templates.component)
 
-  console.log(componentPath, existsSync(componentPath))
-
   log(message.successBake)
 }
