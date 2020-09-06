@@ -11,7 +11,6 @@
 ## Check List
 
 - [x] Generate root reducer
-- [ ] Generate reducer module
-- [ ] Generate reducer by state
+- [x] Generate reducer module
 - [ ] Generate component scaffold using redux
 - [ ] Add replace template config

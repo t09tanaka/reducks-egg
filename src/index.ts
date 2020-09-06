@@ -25,20 +25,14 @@ program
 
 program
   .command('bake')
-  .option('-d, --directory', 'reducer directory')
+  .option(
+    '-n, --reducer-name <name>',
+    'reducer name as camel case: e.g., accountDetail'
+  )
+  .option('-c, --category <category>', 'reducer`s category')
   .description('generate reducers by state user made')
-  .action((source, destination) => {
-    console.log('command called')
-  })
-
-program
-  .command('toast')
-  .option('-c, --component-name', 'component name')
-  .option('-c, --component-name', 'component name')
-  .option('-d, --directory', 'output directory')
-  .description('generate component scaffold using redux')
-  .action((source, destination) => {
-    console.log('command called')
+  .action((source) => {
+    console.log()
   })
 
 program.on('--help', () => {

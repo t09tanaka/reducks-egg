@@ -1,33 +1,27 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 import { REDUCERS_ROOT } from '../config'
-import chalk from 'chalk'
 import { ReducerDirectory } from '../models/ReducerDirectory'
 import { ReducerTemplate } from '../models/ReducerTemplate'
+import { LogMessage } from '../models/LogMessage'
 const { log } = console
 
 export const spawn = (reducerName: string, category?: string) => {
+  const message = new LogMessage({ reducerName, category })
   if (!existsSync(`${path.resolve()}${REDUCERS_ROOT}`)) {
-    log(chalk.red.bold('ERROR! You don`t have root reducer 🤔'))
-    log(chalk.red.bold('       Run ', chalk.blue.bold('reducks-egg farm')))
+    log(message.errorNoRootReducer)
     return
   }
 
   if (!Boolean(reducerName)) {
-    log(
-      chalk.red.bold(
-        'ERROR! You should set ',
-        chalk.blue.bold('--reducer-name=YOUR_REDUCER_NAME'),
-        ' option 🤔'
-      )
-    )
+    log(message.errorNoReducerName)
     return
   }
 
   const reducerDirectory = ReducerDirectory.define(reducerName, category)
 
-  if (existsSync(`${REDUCERS_ROOT}${reducerDirectory}`)) {
-    log(chalk.red.bold(`ERROR! You already have ${reducerName} reducer 🤔`))
+  if (existsSync(`${path.resolve()}${reducerDirectory}`)) {
+    log(message.errorHasReducer)
     return
   }
 
@@ -40,25 +34,31 @@ export const spawn = (reducerName: string, category?: string) => {
     mkdirSync(directory)
   })
 
+  const templates = new ReducerTemplate(reducerName)
   writeFileSync(
     `${path.resolve()}${reducerDirectory}/index.ts`,
-    ReducerTemplate.index(reducerName)
+    templates.index
   )
 
   writeFileSync(
     `${path.resolve()}${reducerDirectory}/models.ts`,
-    ReducerTemplate.model(reducerName)
+    templates.model
+  )
+
+  writeFileSync(
+    `${path.resolve()}${reducerDirectory}/reducers.ts`,
+    templates.reducers
   )
 
   writeFileSync(
     `${path.resolve()}${reducerDirectory}/selectors.ts`,
-    ReducerTemplate.selectors(reducerName)
+    templates.selectors
   )
 
   writeFileSync(
     `${path.resolve()}${reducerDirectory}/types.ts`,
-    ReducerTemplate.types(reducerName)
+    templates.types
   )
 
-  log(chalk.blueBright.bold(`${reducerName} reducer was spawned 🎉🥚🎉`))
+  log(message.successSpawn)
 }

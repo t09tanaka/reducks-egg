@@ -1,7 +1,7 @@
 import { ReducerTemplate } from './ReducerTemplate'
 
 test('index', () => {
-  expect(ReducerTemplate.index('accountDetail'))
+  expect(new ReducerTemplate('accountDetail').index)
     .toEqual(`import { createSlice } from '@reduxjs/toolkit';
 import { initialState, reducers, extraReducers } from './reducers';
 
@@ -15,7 +15,7 @@ const slice = createSlice({
 export const AccountDetailReducer = slice.actions;
 export default slice.reducer;
 `)
-  expect(ReducerTemplate.index('accountEmail'))
+  expect(new ReducerTemplate('accountEmail').index)
     .toEqual(`import { createSlice } from '@reduxjs/toolkit';
 import { initialState, reducers, extraReducers } from './reducers';
 
@@ -29,7 +29,7 @@ const slice = createSlice({
 export const AccountEmailReducer = slice.actions;
 export default slice.reducer;
 `)
-  expect(ReducerTemplate.index('account'))
+  expect(new ReducerTemplate('account').index)
     .toEqual(`import { createSlice } from '@reduxjs/toolkit';
 import { initialState, reducers, extraReducers } from './reducers';
 
@@ -46,7 +46,7 @@ export default slice.reducer;
 })
 
 test('model', () => {
-  expect(ReducerTemplate.model('accountDetail'))
+  expect(new ReducerTemplate('accountDetail').model)
     .toEqual(`import { ErrorProps, AccountDetailState, AccountDetailPayload } from './types';
 
 export default class AccountDetail {
@@ -65,7 +65,7 @@ export default class AccountDetail {
   };
 }
 `)
-  expect(ReducerTemplate.model('accountEmail'))
+  expect(new ReducerTemplate('accountEmail').model)
     .toEqual(`import { ErrorProps, AccountEmailState, AccountEmailPayload } from './types';
 
 export default class AccountEmail {
@@ -84,7 +84,7 @@ export default class AccountEmail {
   };
 }
 `)
-  expect(ReducerTemplate.model('account'))
+  expect(new ReducerTemplate('account').model)
     .toEqual(`import { ErrorProps, AccountState, AccountPayload } from './types';
 
 export default class Account {
@@ -106,19 +106,19 @@ export default class Account {
 })
 
 test('selectors', () => {
-  expect(ReducerTemplate.selectors('accountDetail'))
+  expect(new ReducerTemplate('accountDetail').selectors)
     .toEqual(`import { AccountDetailState } from './types';
 
 export const getAccountDetailState = (state: State): AccountDetailState =>
   state.accountDetail;
 `)
-  expect(ReducerTemplate.selectors('accountEmail'))
+  expect(new ReducerTemplate('accountEmail').selectors)
     .toEqual(`import { AccountEmailState } from './types';
 
 export const getAccountEmailState = (state: State): AccountEmailState =>
   state.accountEmail;
 `)
-  expect(ReducerTemplate.selectors('account'))
+  expect(new ReducerTemplate('account').selectors)
     .toEqual(`import { AccountState } from './types';
 
 export const getAccountState = (state: State): AccountState =>
@@ -126,8 +126,109 @@ export const getAccountState = (state: State): AccountState =>
 `)
 })
 
+test('reducers', () => {
+  expect(new ReducerTemplate('accountDetail').reducers)
+    .toEqual(`import { AccountDetailState, ErrorProps } from './types';
+import { PayloadAction, ActionReducerMapBuilder } from '@reduxjs/toolkit';
+
+export const initialState: AccountDetailState = {
+  yourValue: ''
+};
+
+const initialize = (
+  _: AccountDetailState,
+  action: PayloadAction<AccountDetailState>
+) => ({ ...action.payload });
+
+const updateYourValue = (
+  state: AccountDetailState,
+  action: PayloadAction<string>
+) => {
+  const error = Object.assign({}, state.error ?? {});
+  delete error?.yourValue;
+
+  const result: AccountDetailState = {
+    ...state,
+    error,
+    yourValue: action.payload,
+  };
+  return result;
+};
+
+const updateError = (
+  state: AccountDetailState,
+  action: PayloadAction<ErrorProps>
+) => {
+  const result: AccountDetailState = {
+    ...state,
+    error: action.payload,
+  };
+  return result;
+};
+
+export const reducers = {
+  initialize,
+  updateYourValue,
+  updateError,
+};
+
+export const extraReducers = (
+  builder: ActionReducerMapBuilder<AccountDetailState>
+) => {};
+`)
+  expect(new ReducerTemplate('accountEmail').reducers)
+    .toEqual(`import { AccountEmailState, ErrorProps } from './types';
+import { PayloadAction, ActionReducerMapBuilder } from '@reduxjs/toolkit';
+
+export const initialState: AccountEmailState = {
+  yourValue: ''
+};
+
+const initialize = (
+  _: AccountEmailState,
+  action: PayloadAction<AccountEmailState>
+) => ({ ...action.payload });
+
+const updateYourValue = (
+  state: AccountEmailState,
+  action: PayloadAction<string>
+) => {
+  const error = Object.assign({}, state.error ?? {});
+  delete error?.yourValue;
+
+  const result: AccountEmailState = {
+    ...state,
+    error,
+    yourValue: action.payload,
+  };
+  return result;
+};
+
+const updateError = (
+  state: AccountEmailState,
+  action: PayloadAction<ErrorProps>
+) => {
+  const result: AccountEmailState = {
+    ...state,
+    error: action.payload,
+  };
+  return result;
+};
+
+export const reducers = {
+  initialize,
+  updateYourValue,
+  updateError,
+};
+
+export const extraReducers = (
+  builder: ActionReducerMapBuilder<AccountEmailState>
+) => {};
+`)
+})
+
 test('types', () => {
-  expect(ReducerTemplate.types('accountDetail'))
+  expect(new ReducerTemplate('accountDetail').types)
     .toEqual(`export interface ErrorProps {
     yourValue?:boolean
 }
@@ -140,7 +241,7 @@ export interface AccountDetailState {
 }
 `)
 
-  expect(ReducerTemplate.types('accountEmail'))
+  expect(new ReducerTemplate('accountEmail').types)
     .toEqual(`export interface ErrorProps {
     yourValue?:boolean
 }
@@ -153,7 +254,7 @@ export interface AccountEmailState {
 }
 `)
 
-  expect(ReducerTemplate.types('account'))
+  expect(new ReducerTemplate('account').types)
     .toEqual(`export interface ErrorProps {
     yourValue?:boolean
 }

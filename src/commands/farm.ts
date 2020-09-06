@@ -2,12 +2,13 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 import { REDUCERS_ROOT } from '../config'
 import { ROOT_REDUCER_TEMPLATE } from '../templates/rootReducers'
-import chalk from 'chalk'
+import { LogMessage } from '../models/LogMessage'
 const { log } = console
 
 export const farm = () => {
+  const message = new LogMessage({ reducerName: '' })
   if (existsSync(`${path.resolve()}${REDUCERS_ROOT}`)) {
-    log(chalk.red.bold('ERROR! You already have root reducer 🤔'))
+    log(message.errorHasRootReducer)
     return
   }
 
@@ -17,5 +18,5 @@ export const farm = () => {
     ROOT_REDUCER_TEMPLATE
   )
 
-  log(chalk.blueBright.bold('Root reducer is ready 🎉'))
+  log(message.successFarm)
 }
