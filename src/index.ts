@@ -2,6 +2,7 @@ import { Command } from 'commander'
 
 import { farm } from './commands/farm'
 import { spawn } from './commands/spawn'
+import { bake } from './commands/bake'
 
 const program = new Command()
 program.version('0.0.1')
@@ -25,14 +26,15 @@ program
 
 program
   .command('bake')
+  .option('-n, --reducer-name <name>', 'reducer name: e.g., accountDetail')
   .option(
-    '-n, --reducer-name <name>',
-    'reducer name as camel case: e.g., accountDetail'
+    '-c, --component-name <component>',
+    'component name: e.g., YourComponent'
   )
-  .option('-c, --category <category>', 'reducer`s category')
-  .description('generate reducers by state user made')
+  .option('-p, --path <path>', 'component path from root')
+  .description('generate component using redux')
   .action((source) => {
-    console.log()
+    bake(source.reducerName, source.componentName, source.path)
   })
 
 program.on('--help', () => {

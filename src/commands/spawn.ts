@@ -4,6 +4,7 @@ import { REDUCERS_ROOT } from '../config'
 import { ReducerDirectory } from '../models/ReducerDirectory'
 import { ReducerTemplate } from '../models/ReducerTemplate'
 import { LogMessage } from '../models/LogMessage'
+import { Directory } from '../models/Directory'
 const { log } = console
 
 export const spawn = (reducerName: string, category?: string) => {
@@ -25,7 +26,7 @@ export const spawn = (reducerName: string, category?: string) => {
     return
   }
 
-  ReducerDirectory.directoryList(reducerDirectory).forEach((dir) => {
+  Directory.directoryList(reducerDirectory, REDUCERS_ROOT).forEach((dir) => {
     const directory = `${path.resolve()}${dir}`
     if (existsSync(directory)) {
       return

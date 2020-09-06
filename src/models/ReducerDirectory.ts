@@ -13,23 +13,4 @@ export class ReducerDirectory {
 
     return `${REDUCERS_ROOT}${categoryDir}${children}`
   }
-
-  static directoryList(directory: string): string[] {
-    const dirs = directory
-      .replace(REDUCERS_ROOT, '')
-      .replace(/^\//, '')
-      .split('/')
-
-    const result: string[] = []
-    dirs.forEach((dir, index) => {
-      if (index === 0) {
-        result.push(`${REDUCERS_ROOT}/${dir}`)
-        return
-      }
-
-      const prev = result[index - 1]
-      result.push(`${prev}/${dir}`)
-    })
-    return result
-  }
 }

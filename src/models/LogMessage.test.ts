@@ -38,6 +38,17 @@ test('errorHasReducer', () => {
   ).toEqual(chalk.red.bold(`ERROR! You already have accountEmail reducer 🤔`))
 })
 
+test('errorHasComponent', () => {
+  expect(
+    new LogMessage({ componentName: 'AccountDetail' }).errorHasComponent
+  ).toEqual(
+    chalk.red.bold(`ERROR! You already have AccountDetail component 🤔`)
+  )
+  expect(
+    new LogMessage({ componentName: 'AccountEmail' }).errorHasComponent
+  ).toEqual(chalk.red.bold(`ERROR! You already have AccountEmail component 🤔`))
+})
+
 test('errorNoReducer', () => {
   expect(
     new LogMessage({ reducerName: 'accountDetail', category: 'forms' })
@@ -59,10 +70,30 @@ test('errorNoReducer', () => {
 })
 
 test('errorNoReducerName', () => {
-  expect(new LogMessage({ reducerName: '' }).errorNoReducerName).toEqual(
+  expect(new LogMessage({}).errorNoReducerName).toEqual(
     chalk.red.bold(
       'ERROR! You should set ',
       chalk.blue.bold('--reducer-name=YOUR_REDUCER_NAME'),
+      ' option 🤔'
+    )
+  )
+})
+
+test('errorNoComponentName', () => {
+  expect(new LogMessage({}).errorNoComponentName).toEqual(
+    chalk.red.bold(
+      'ERROR! You should set ',
+      chalk.blue.bold('--component-name=YOUR_COMPONENT_NAME'),
+      ' option 🤔'
+    )
+  )
+})
+
+test('errorNoPathName', () => {
+  expect(new LogMessage({}).errorNoPathName).toEqual(
+    chalk.red.bold(
+      'ERROR! You should set ',
+      chalk.blue.bold('--path=YOUR_COMPONENT_PATH'),
       ' option 🤔'
     )
   )
@@ -97,10 +128,10 @@ test('successSpawn', () => {
 })
 
 test('successBake', () => {
-  expect(new LogMessage({ reducerName: 'accountDetail' }).successBake).toEqual(
-    chalk.blueBright.bold(`accountDetail reducer was baked 🍳`)
-  )
-  expect(new LogMessage({ reducerName: 'accountEmail' }).successBake).toEqual(
-    chalk.blueBright.bold(`accountEmail reducer was baked 🍳`)
-  )
+  expect(
+    new LogMessage({ componentName: 'AccountNameField' }).successBake
+  ).toEqual(chalk.blueBright.bold(`AccountNameField component was baked 🍳`))
+  expect(
+    new LogMessage({ componentName: 'AccountEmailField' }).successBake
+  ).toEqual(chalk.blueBright.bold(`AccountEmailField component was baked 🍳`))
 })

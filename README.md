@@ -3,14 +3,16 @@
 ## How to create reducer?
 
 1. create root reducer `npx reducks-egg farm`
-1. create scafolled `npx reducks-egg spawn --reducer-name=[YOUR_REDUCER] --category=domains`
-1. edit state and errors parametor in types.ts in your reducer
-1. create reducers `npx reducks-egg equip`
-1. Register reducer to `combineReducers`
+1. create scafolled `npx reducks-egg spawn --reducer-name=[YOUR_REDUCER_NAME] --category=domains`
+
+## How to create component using redux?
+
+1. create component `npx reducks-egg bake --component-name=[YOUR_COMPONENT_NAME] --reducer-name=[YOUR_REDUCER_NAME]`
 
 ## Check List
 
 - [x] Generate root reducer
 - [x] Generate reducer module
-- [ ] Generate component scaffold using redux
+- [x] Generate component scaffold using redux
+- [ ] Replace inline options to interactive options
 - [ ] Add replace template config
