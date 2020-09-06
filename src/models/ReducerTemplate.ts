@@ -1,9 +1,9 @@
-import { REDUCER_TYPE_TEMPLATE } from '../templates/reducerType'
+import { REDUCER_TYPE_TEMPLATE } from '../templates/REDUCER_TYPE'
 import { injectionToTemplate } from '../utils/general'
-import { REDUCER_INDEX_TEMPLATE } from '../templates/reducerIndex'
-import { REDUCER_SELECTORS_TEMPLATE } from '../templates/reducerSelectors'
-import { REDUCER_MODEL_TEMPLATE } from '../templates/reducerModel'
-import { REDUCER_REDUCERS_TEMPLATE } from '../templates/reducerReducers'
+import { REDUCER_INDEX_TEMPLATE } from '../templates/REDUCER_INDEX'
+import { REDUCER_SELECTORS_TEMPLATE } from '../templates/REDUCER_SELECTORS'
+import { REDUCER_MODEL_TEMPLATE } from '../templates/REDUCER_MODEL'
+import { REDUCER_REDUCERS_TEMPLATE } from '../templates/REDUCER_REDUCERS'
 
 export class ReducerTemplate {
   private reducerName: string

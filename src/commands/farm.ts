@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 import { REDUCERS_ROOT } from '../config'
-import { ROOT_REDUCER_TEMPLATE } from '../templates/rootReducers'
+import { ROOT_REDUCER_TEMPLATE } from '../templates/ROOT_REDUCER'
 import { LogMessage } from '../models/LogMessage'
 const { log } = console
 
