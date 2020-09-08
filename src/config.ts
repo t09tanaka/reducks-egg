@@ -1,2 +1,5 @@
 export const REDUCERS_ROOT = '/src/reducers'
 export const COMPONENTS_ROOT = '/src/components'
+export const TEST_ROOT = '/test'
+export const REDUCERS_TEST_ROOT = '/test/reducers'
+export const COMPONENTS_TEST_ROOT = '/test/components'

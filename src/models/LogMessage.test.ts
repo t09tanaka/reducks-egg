@@ -23,10 +23,10 @@ test('errorHasRootReducer', () => {
   expect(
     new LogMessage({ reducerName: 'accountDetail', category: 'forms' })
       .errorHasRootReducer
-  ).toEqual(chalk.red.bold('ERROR! You already have root reducer 🤔'))
+  ).toEqual(chalk.gray.bold('ERROR! You already have root reducer 🤔'))
   expect(
     new LogMessage({ reducerName: 'accountDetail' }).errorHasRootReducer
-  ).toEqual(chalk.red.bold('ERROR! You already have root reducer 🤔'))
+  ).toEqual(chalk.gray.bold('ERROR! You already have root reducer 🤔'))
 })
 
 test('errorHasReducer', () => {

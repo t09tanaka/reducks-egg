@@ -29,7 +29,7 @@ export class LogMessage {
   }
 
   get errorHasRootReducer(): string {
-    return chalk.red.bold('ERROR! You already have root reducer 🤔')
+    return chalk.gray.bold('ERROR! You already have root reducer 🤔')
   }
 
   get errorHasReducer(): string {
