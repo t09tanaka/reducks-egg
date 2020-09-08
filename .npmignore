@@ -1,1 +1,10 @@
 src/
+.editorconfig
+.prettirignore
+.prettierrc.json
+jest.config.json
+LICENSE
+package-lock.json
+README.md
+tsconfig.json
+webpack.*.js
