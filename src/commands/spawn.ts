@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
-import { REDUCERS_ROOT } from '../config'
+import { REDUCERS_ROOT, REDUCERS_TEST_ROOT } from '../config'
 import { ReducerDirectory } from '../models/ReducerDirectory'
 import { ReducerTemplate } from '../models/ReducerTemplate'
 import { LogMessage } from '../models/LogMessage'
@@ -19,13 +19,17 @@ export const spawn = (reducerName: string, category?: string) => {
     return
   }
 
-  const reducerDirectory = ReducerDirectory.define(reducerName, category)
+  const { reducerDirectory, reducerTestDirectory } = ReducerDirectory.define(
+    reducerName,
+    category
+  )
 
   if (existsSync(`${path.resolve()}${reducerDirectory}`)) {
     log(message.errorHasReducer)
     return
   }
 
+  // for reducer
   Directory.directoryList(reducerDirectory, REDUCERS_ROOT).forEach((dir) => {
     const directory = `${path.resolve()}${dir}`
     if (existsSync(directory)) {
@@ -36,30 +40,59 @@ export const spawn = (reducerName: string, category?: string) => {
   })
 
   const templates = new ReducerTemplate(reducerName)
-  writeFileSync(
-    `${path.resolve()}${reducerDirectory}/index.ts`,
-    templates.index
+  if (!existsSync(`${path.resolve()}${reducerDirectory}/index.ts`)) {
+    writeFileSync(
+      `${path.resolve()}${reducerDirectory}/index.ts`,
+      templates.index
+    )
+  }
+
+  if (!existsSync(`${path.resolve()}${reducerDirectory}/models.ts`)) {
+    writeFileSync(
+      `${path.resolve()}${reducerDirectory}/models.ts`,
+      templates.model
+    )
+  }
+
+  if (!existsSync(`${path.resolve()}${reducerDirectory}/reducers.ts`)) {
+    writeFileSync(
+      `${path.resolve()}${reducerDirectory}/reducers.ts`,
+      templates.reducers
+    )
+  }
+
+  if (!existsSync(`${path.resolve()}${reducerDirectory}/selectors.ts`)) {
+    writeFileSync(
+      `${path.resolve()}${reducerDirectory}/selectors.ts`,
+      templates.selectors
+    )
+  }
+
+  if (!existsSync(`${path.resolve()}${reducerDirectory}/types.ts`)) {
+    writeFileSync(
+      `${path.resolve()}${reducerDirectory}/types.ts`,
+      templates.types
+    )
+  }
+
+  // for test
+  Directory.directoryList(reducerTestDirectory, REDUCERS_TEST_ROOT).forEach(
+    (dir) => {
+      const directory = `${path.resolve()}${dir}`
+      if (existsSync(directory)) {
+        return
+      }
+
+      mkdirSync(directory)
+    }
   )
 
-  writeFileSync(
-    `${path.resolve()}${reducerDirectory}/models.ts`,
-    templates.model
-  )
-
-  writeFileSync(
-    `${path.resolve()}${reducerDirectory}/reducers.ts`,
-    templates.reducers
-  )
-
-  writeFileSync(
-    `${path.resolve()}${reducerDirectory}/selectors.ts`,
-    templates.selectors
-  )
-
-  writeFileSync(
-    `${path.resolve()}${reducerDirectory}/types.ts`,
-    templates.types
-  )
+  if (!existsSync(`${path.resolve()}${reducerTestDirectory}/models.ts`)) {
+    writeFileSync(
+      `${path.resolve()}${reducerTestDirectory}/models.ts`,
+      templates.testModel
+    )
+  }
 
   log(message.successSpawn)
 }

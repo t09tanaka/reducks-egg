@@ -266,4 +266,16 @@ export interface AccountState {
     error?:ErrorProps
 }
 `)
+
+  expect(new ReducerTemplate('accountDetail', 'forms').testModel)
+    .toEqual(`import AccountDetail from '~/src/reducers/forms/account/detail/models.ts';
+
+test('trim', () => {
+  expect(new AccountDetail().trim({yourValue:''})).toBe({});
+});
+
+test('validate', () => {
+  expect(new AccountDetail().validate({yourValue:''}).noError).toBe(true);
+});
+`)
 })

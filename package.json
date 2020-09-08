@@ -7,7 +7,8 @@
     "build": "webpack",
     "prepare": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.develop.js --watch",
-    "test": "jest"
+    "test": "jest",
+    "test:w": "jest --watch"
   },
   "bin": {
     "reducks-egg": "./bin/reducks-egg.js"

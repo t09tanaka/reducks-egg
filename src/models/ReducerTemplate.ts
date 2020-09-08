@@ -4,12 +4,16 @@ import { REDUCER_INDEX_TEMPLATE } from '../templates/REDUCER_INDEX'
 import { REDUCER_SELECTORS_TEMPLATE } from '../templates/REDUCER_SELECTORS'
 import { REDUCER_MODEL_TEMPLATE } from '../templates/REDUCER_MODEL'
 import { REDUCER_REDUCERS_TEMPLATE } from '../templates/REDUCER_REDUCERS'
+import { TEST_REDUCER_MODEL_TEMPLATE } from '../templates/TEST_REDUCER_MODEL'
+import { ReducerDirectory } from './ReducerDirectory'
 
 export class ReducerTemplate {
   private reducerName: string
+  private category?: string
 
-  constructor(reducerName: string) {
+  constructor(reducerName: string, category?: string) {
     this.reducerName = reducerName
+    this.category = category
   }
 
   get index(): string {
@@ -81,6 +85,28 @@ export class ReducerTemplate {
       {
         key: 'reducerName',
         value,
+      },
+    ])
+  }
+
+  get testModel(): string {
+    const value = this.reducerName.replace(/^[a-z]/g, function (val) {
+      return val.toUpperCase()
+    })
+
+    const { reducerDirectory } = ReducerDirectory.define(
+      this.reducerName,
+      this.category
+    )
+
+    return injectionToTemplate(TEST_REDUCER_MODEL_TEMPLATE, [
+      {
+        key: 'reducerName',
+        value,
+      },
+      {
+        key: 'reducersDirectory',
+        value: reducerDirectory,
       },
     ])
   }

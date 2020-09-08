@@ -1,7 +1,10 @@
-import { REDUCERS_ROOT } from '../config'
+import { REDUCERS_ROOT, REDUCERS_TEST_ROOT } from '../config'
 
 export class ReducerDirectory {
-  static define(reducerName: string, category?: string): string {
+  static define(
+    reducerName: string,
+    category?: string
+  ): { reducerDirectory: string; reducerTestDirectory: string } {
     const dirs = reducerName.replace(/([a-z](?=[A-Z]))/g, '$1 ').split(' ')
 
     // category
@@ -11,6 +14,9 @@ export class ReducerDirectory {
     let children = ''
     dirs.forEach((dir) => (children += '/' + dir.toLocaleLowerCase()))
 
-    return `${REDUCERS_ROOT}${categoryDir}${children}`
+    return {
+      reducerDirectory: `${REDUCERS_ROOT}${categoryDir}${children}`,
+      reducerTestDirectory: `${REDUCERS_TEST_ROOT}${categoryDir}${children}`,
+    }
   }
 }
