@@ -1,5 +1,6 @@
 import { injectionToTemplate } from '../utils/general'
 import { BASIC_COMPONENT_TEMPLATE } from '../templates/BASIC_COMPONENT'
+import { TEST_COMPONENT_TEMPLATE } from '../templates/TEST_COMPONENT'
 
 export class ComponentTemplate {
   private reducerName: string
@@ -20,6 +21,15 @@ export class ComponentTemplate {
         key: 'reducerName',
         value,
       },
+      {
+        key: 'componentName',
+        value: this.componentName,
+      },
+    ])
+  }
+
+  get componentTest(): string {
+    return injectionToTemplate(TEST_COMPONENT_TEMPLATE, [
       {
         key: 'componentName',
         value: this.componentName,

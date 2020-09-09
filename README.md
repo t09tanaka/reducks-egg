@@ -15,6 +15,6 @@
 - [x] Generate reducer module
 - [x] Generate component scaffold using redux
 - [x] Replace inline options to interactive options
-- [ ] Generate test for model
-- [ ] Generate test for component
+- [x] Generate test for model
+- [x] Generate test for component
 - [ ] Add replace template config

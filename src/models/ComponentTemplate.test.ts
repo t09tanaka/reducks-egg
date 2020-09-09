@@ -1,6 +1,6 @@
 import { ComponentTemplate } from './ComponentTemplate'
 
-test('index', () => {
+test('component', () => {
   expect(new ComponentTemplate('accountDetail', 'AccountNameField').component)
     .toEqual(`import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -54,5 +54,18 @@ const AccountNameField: React.FC = () => {
 };
 
 export default AccountNameField;
+`)
+})
+
+test('componentTest', () => {
+  expect(
+    new ComponentTemplate('accountDetail', 'AccountNameField').componentTest
+  ).toEqual(`import * as React from 'react';
+import { shallow } from 'enzyme';
+
+it('AccountNameField', () => {
+  const result = shallow(<Template />).contains(<p>hello</p>);
+  expect(result).toBeTruthy();
+});
 `)
 })

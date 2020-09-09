@@ -28,12 +28,6 @@ program
 
 program
   .command('bake')
-  .option('-n, --reducer-name <name>', 'reducer name: e.g., accountDetail')
-  .option(
-    '-c, --component-name <component>',
-    'component name: e.g., YourComponent'
-  )
-  .option('-p, --path <path>', 'component path from root')
   .description('generate component using redux')
   .action((source) => {
     const reducerName = readlineSync.question(

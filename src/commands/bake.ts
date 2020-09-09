@@ -28,20 +28,20 @@ export const bake = (
     return
   }
 
-  if (!existsSync(`${path.resolve()}${REDUCERS_ROOT}`)) {
-    log(message.errorNoRootReducer)
-    return
-  }
-
   const componentPath = `${path.resolve()}${pathName}/${componentName}.tsx`
+  const componentTestPath = `${path.resolve()}${pathName.replace(
+    '/src',
+    '/test'
+  )}/${componentName}.tsx`
 
   if (existsSync(componentPath)) {
-    log(message.errorNoRootReducer)
+    log(message.errorHasComponent)
     return
   }
 
-  Directory.directoryList(pathName, '/src').forEach((dir) => {
-    const directory = `${path.resolve()}${dir}`
+  // for component
+  Directory.directoryList(pathName).forEach((dir) => {
+    const directory = `${path.resolve()}/${dir}`
     if (existsSync(directory)) {
       return
     }
@@ -51,6 +51,18 @@ export const bake = (
 
   const templates = new ComponentTemplate(reducerName, componentName)
   writeFileSync(componentPath, templates.component)
+
+  // for test
+  Directory.directoryList(pathName.replace('/src', '/test')).forEach((dir) => {
+    const directory = `${path.resolve()}/${dir}`
+    if (existsSync(directory)) {
+      return
+    }
+
+    mkdirSync(directory)
+  })
+
+  writeFileSync(componentTestPath, templates.componentTest)
 
   log(message.successBake)
 }
