@@ -106,3 +106,4 @@ dist
 # Project
 src/reducers
 src/components
+.DS_Store

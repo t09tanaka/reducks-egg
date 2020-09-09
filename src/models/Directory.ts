@@ -1,11 +1,11 @@
 export class Directory {
-  static directoryList(directory: string, rootDir: string): string[] {
-    const dirs = directory.replace(rootDir, '').replace(/^\//, '').split('/')
+  static directoryList(directory: string): string[] {
+    const dirs = directory.replace(/^\//, '').split('/')
 
     const result: string[] = []
     dirs.forEach((dir, index) => {
       if (index === 0) {
-        result.push(`${rootDir}/${dir}`)
+        result.push(dir)
         return
       }
 

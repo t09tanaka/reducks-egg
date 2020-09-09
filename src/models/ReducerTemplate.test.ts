@@ -268,9 +268,7 @@ export interface AccountState {
 `)
 
   expect(new ReducerTemplate('accountDetail', 'forms').testModel)
-    .toEqual(`import AccountDetail from '~/src/reducers/forms/account/detail/models.ts';
-
-test('trim', () => {
+    .toEqual(`test('trim', () => {
   expect(new AccountDetail().trim({yourValue:''})).toBe({});
 });
 

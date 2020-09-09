@@ -9,10 +9,6 @@ const { log } = console
 
 export const spawn = (reducerName: string, category?: string) => {
   const message = new LogMessage({ reducerName, category })
-  if (!existsSync(`${path.resolve()}${REDUCERS_ROOT}`)) {
-    log(message.errorNoRootReducer)
-    return
-  }
 
   if (!Boolean(reducerName)) {
     log(message.errorNoReducerName)
@@ -30,8 +26,8 @@ export const spawn = (reducerName: string, category?: string) => {
   }
 
   // for reducer
-  Directory.directoryList(reducerDirectory, REDUCERS_ROOT).forEach((dir) => {
-    const directory = `${path.resolve()}${dir}`
+  Directory.directoryList(reducerDirectory).forEach((dir) => {
+    const directory = `${path.resolve()}/${dir}`
     if (existsSync(directory)) {
       return
     }
@@ -76,20 +72,18 @@ export const spawn = (reducerName: string, category?: string) => {
   }
 
   // for test
-  Directory.directoryList(reducerTestDirectory, REDUCERS_TEST_ROOT).forEach(
-    (dir) => {
-      const directory = `${path.resolve()}${dir}`
-      if (existsSync(directory)) {
-        return
-      }
-
-      mkdirSync(directory)
+  Directory.directoryList(reducerTestDirectory).forEach((dir) => {
+    const directory = `${path.resolve()}/${dir}`
+    if (existsSync(directory)) {
+      return
     }
-  )
 
-  if (!existsSync(`${path.resolve()}${reducerTestDirectory}/models.ts`)) {
+    mkdirSync(directory)
+  })
+
+  if (!existsSync(`${path.resolve()}${reducerTestDirectory}/models.test.ts`)) {
     writeFileSync(
-      `${path.resolve()}${reducerTestDirectory}/models.ts`,
+      `${path.resolve()}${reducerTestDirectory}/models.test.ts`,
       templates.testModel
     )
   }
