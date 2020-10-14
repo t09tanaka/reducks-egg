@@ -1,8 +1,8 @@
 src/
 .editorconfig
-.prettirignore
+.prettierignore
 .prettierrc.json
-jest.config.json
+jest.config.js
 LICENSE
 package-lock.json
 README.md
