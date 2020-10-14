@@ -23,7 +23,12 @@ program
     const category = readlineSync.question(
       'Enter reducer category (optional / e.g., domains) '
     )
-    spawn(reducerName, category)
+
+    if (readlineSync.keyInYN('Do you want the test?')) {
+      spawn(reducerName, category, true)
+    } else {
+      spawn(reducerName, category, false)
+    }
   })
 
 program
@@ -39,8 +44,9 @@ program
     const pathName = readlineSync.question(
       'Enter component directory path (e.g., /src/components/account/detail) '
     )
+    const needTest = readlineSync.keyInYN('Do you want the test?')
 
-    bake(reducerName, componentName, pathName)
+    bake(reducerName, componentName, pathName, needTest)
   })
 
 program.on('--help', () => {

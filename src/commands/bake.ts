@@ -10,7 +10,8 @@ const { log } = console
 export const bake = (
   reducerName: string,
   componentName: string,
-  pathName: string
+  pathName: string,
+  needTest: boolean
 ) => {
   const message = new LogMessage({ reducerName, componentName, pathName })
   if (!Boolean(reducerName)) {
@@ -53,16 +54,20 @@ export const bake = (
   writeFileSync(componentPath, templates.component)
 
   // for test
-  Directory.directoryList(pathName.replace('/src', '/test')).forEach((dir) => {
-    const directory = `${path.resolve()}/${dir}`
-    if (existsSync(directory)) {
-      return
-    }
+  if (needTest) {
+    Directory.directoryList(pathName.replace('/src', '/test')).forEach(
+      (dir) => {
+        const directory = `${path.resolve()}/${dir}`
+        if (existsSync(directory)) {
+          return
+        }
 
-    mkdirSync(directory)
-  })
+        mkdirSync(directory)
+      }
+    )
 
-  writeFileSync(componentTestPath, templates.componentTest)
+    writeFileSync(componentTestPath, templates.componentTest)
+  }
 
   log(message.successBake)
 }

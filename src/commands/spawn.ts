@@ -7,7 +7,11 @@ import { LogMessage } from '../models/LogMessage'
 import { Directory } from '../models/Directory'
 const { log } = console
 
-export const spawn = (reducerName: string, category?: string) => {
+export const spawn = (
+  reducerName: string,
+  category?: string,
+  needTest?: boolean
+) => {
   const message = new LogMessage({ reducerName, category })
 
   if (!Boolean(reducerName)) {
@@ -72,20 +76,24 @@ export const spawn = (reducerName: string, category?: string) => {
   }
 
   // for test
-  Directory.directoryList(reducerTestDirectory).forEach((dir) => {
-    const directory = `${path.resolve()}/${dir}`
-    if (existsSync(directory)) {
-      return
+  if (needTest) {
+    Directory.directoryList(reducerTestDirectory).forEach((dir) => {
+      const directory = `${path.resolve()}/${dir}`
+      if (existsSync(directory)) {
+        return
+      }
+
+      mkdirSync(directory)
+    })
+
+    if (
+      !existsSync(`${path.resolve()}${reducerTestDirectory}/models.test.ts`)
+    ) {
+      writeFileSync(
+        `${path.resolve()}${reducerTestDirectory}/models.test.ts`,
+        templates.testModel
+      )
     }
-
-    mkdirSync(directory)
-  })
-
-  if (!existsSync(`${path.resolve()}${reducerTestDirectory}/models.test.ts`)) {
-    writeFileSync(
-      `${path.resolve()}${reducerTestDirectory}/models.test.ts`,
-      templates.testModel
-    )
   }
 
   log(message.successSpawn)
